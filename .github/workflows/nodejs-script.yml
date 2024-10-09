@@ -1,0 +1,32 @@
+name: Run Node.js Script
+
+# Trigger the workflow on pushes to the main branch and schedule a daily cron job
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *' # Runs the script every day at midnight UTC
+
+jobs:
+  run-nodejs-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository's code
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Specify the Node.js version you are using
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run your script
+      - name: Run Node.js script
+        run: node MarsorderEmail.js
